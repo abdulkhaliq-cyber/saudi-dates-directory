@@ -1,0 +1,39 @@
+// prisma/schema.prisma
+
+// Connects to your PostgreSQL database hosted on Railway.app
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Defines the data structure for your Saudi Dates Directory listings
+model Listing {
+  id          Int      @id @default(autoincrement())
+  
+  // Core Business Data
+  name        String   @unique // Maps to 'Business Name' - ensures uniqueness
+  category    String?  // Maps to 'Category'
+  city        String?  // Maps to 'City'
+  phone       String?  // Maps to 'Phone'
+  website     String?  // Maps to 'Website'
+  
+  // Review/Location Data
+  rating      Float?   // Maps to 'Rating'
+  mapsUrl     String?  // Maps to 'Maps URL'
+  address     String?  // Maps to 'Address'
+  latitude    Float?   // Maps to 'Latitude'
+  longitude   Float?   // Maps to 'Longitude'
+  
+  // Optional/Metadata Fields (You can keep or remove Country/Type/TimeZone)
+  // country     String? 
+  // type        String? 
+  // timeZone    String?
+  
+  // System Fields
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
