@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
       address,
       latitude,
       longitude,
+      seoTitle,
     } = body;
     
     // Validate required fields
@@ -45,6 +46,7 @@ export async function POST(request: NextRequest) {
         address: address || undefined,
         latitude: latitude ? parseFloat(latitude) : undefined,
         longitude: longitude ? parseFloat(longitude) : undefined,
+        seoTitle: seoTitle || undefined,
       },
       create: {
         name,
@@ -57,6 +59,7 @@ export async function POST(request: NextRequest) {
         address: address || null,
         latitude: latitude ? parseFloat(latitude) : null,
         longitude: longitude ? parseFloat(longitude) : null,
+        seoTitle: seoTitle || null,
       },
     });
     
@@ -111,6 +114,7 @@ export async function GET(request: NextRequest) {
       'address',
       'latitude',
       'longitude',
+      'seoTitle',
     ],
     example: {
       name: 'Al Qassim Dates Company',
@@ -123,6 +127,7 @@ export async function GET(request: NextRequest) {
       address: '123 King Fahd Road, Riyadh',
       latitude: 24.7136,
       longitude: 46.6753,
+      seoTitle: 'Al Qassim Dates - Premium Saudi Dates in Riyadh',
     },
   });
 }

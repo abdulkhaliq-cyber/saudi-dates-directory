@@ -28,6 +28,9 @@ model Listing {
   latitude    Float?   // Maps to 'Latitude'
   longitude   Float?   // Maps to 'Longitude'
   
+  // SEO Field
+  seoTitle    String?  // Maps to 'SEO Title'
+  
   // Optional/Metadata Fields (You can keep or remove Country/Type/TimeZone)
   // country     String? 
   // type        String? 
