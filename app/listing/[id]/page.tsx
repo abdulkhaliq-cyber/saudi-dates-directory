@@ -191,7 +191,20 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                     </a>
                   )}
 
-                  {listing.mapsUrl && (
+                  {/* Google Maps link - prioritize coordinates, fallback to mapsUrl */}
+                  {(listing.latitude && listing.longitude) ? (
+                    <a
+                      href={`https://maps.google.com/?q=${listing.latitude},${listing.longitude}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                    >
+                      <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                      </svg>
+                      View on Google Maps
+                    </a>
+                  ) : listing.mapsUrl && (
                     <a
                       href={listing.mapsUrl}
                       target="_blank"
