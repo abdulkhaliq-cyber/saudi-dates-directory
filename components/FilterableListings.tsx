@@ -76,11 +76,11 @@ export default function FilterableListings({
               id="city-filter"
               value={selectedCity}
               onChange={(e) => setSelectedCity(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5a8a5a] focus:border-[#5a8a5a] bg-white transition-all"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5a8a5a] focus:border-[#5a8a5a] bg-white text-gray-900 transition-all"
             >
-              <option value="">All Cities</option>
+              <option value="" className="text-gray-600">All Cities</option>
               {cities.map((city) => (
-                <option key={city.name} value={city.name}>
+                <option key={city.name} value={city.name} className="text-gray-900">
                   {city.name} ({city.count})
                 </option>
               ))}
@@ -96,11 +96,11 @@ export default function FilterableListings({
               id="category-filter"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5a8a5a] focus:border-[#5a8a5a] bg-white transition-all"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5a8a5a] focus:border-[#5a8a5a] bg-white text-gray-900 transition-all"
             >
-              <option value="">All Categories</option>
+              <option value="" className="text-gray-600">All Categories</option>
               {categories.map((cat) => (
-                <option key={cat.category} value={cat.category}>
+                <option key={cat.category} value={cat.category} className="text-gray-900">
                   {cat.category} ({cat.count})
                 </option>
               ))}
