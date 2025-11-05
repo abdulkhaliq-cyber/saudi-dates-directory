@@ -58,15 +58,15 @@ function StarRating({ rating }: { rating: number }) {
 
 export default function ListingCard({ listing }: ListingCardProps) {
   return (
-    <div className="bg-white rounded-xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden border border-gray-100">
+    <div className="bg-white rounded-xl shadow-md hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 overflow-hidden border border-[#e8e4dd] group">
       {/* Card Content */}
       <div className="p-6">
         {/* Name - Bold and Clickable */}
         <Link 
           href={`/listing/${listing.id}`}
-          className="block group"
+          className="block"
         >
-          <h3 className="text-xl font-bold text-gray-900 group-hover:text-amber-600 transition-colors mb-3 line-clamp-2">
+          <h3 className="text-xl font-bold text-gray-900 group-hover:text-[#5a8a5a] transition-colors duration-200 mb-3 line-clamp-2">
             {listing.name}
           </h3>
         </Link>
@@ -74,7 +74,7 @@ export default function ListingCard({ listing }: ListingCardProps) {
         {/* Category Badge */}
         {listing.category && (
           <div className="mb-3">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#e8ede8] text-[#3a5a3a]">
               {listing.category}
             </span>
           </div>
@@ -101,7 +101,7 @@ export default function ListingCard({ listing }: ListingCardProps) {
         {listing.phone && (
           <a
             href={`tel:${listing.phone}`}
-            className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95"
+            className="w-full flex items-center justify-center gap-2 bg-[#5a8a5a] hover:bg-[#486e48] text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-lg active:scale-95"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
@@ -113,10 +113,10 @@ export default function ListingCard({ listing }: ListingCardProps) {
         {/* View Details Link */}
         <Link
           href={`/listing/${listing.id}`}
-          className="mt-3 w-full flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-3 px-4 rounded-lg transition-all duration-200"
+          className="mt-3 w-full flex items-center justify-center gap-2 bg-[#f5f3ef] hover:bg-[#e8e4dd] text-gray-800 font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-md group/button"
         >
           <span className="text-sm">View Details</span>
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 group-hover/button:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </Link>

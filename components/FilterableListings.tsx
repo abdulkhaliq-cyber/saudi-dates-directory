@@ -76,7 +76,7 @@ export default function FilterableListings({
               id="city-filter"
               value={selectedCity}
               onChange={(e) => setSelectedCity(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 bg-white"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5a8a5a] focus:border-[#5a8a5a] bg-white transition-all"
             >
               <option value="">All Cities</option>
               {cities.map((city) => (
@@ -96,7 +96,7 @@ export default function FilterableListings({
               id="category-filter"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 bg-white"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5a8a5a] focus:border-[#5a8a5a] bg-white transition-all"
             >
               <option value="">All Categories</option>
               {categories.map((cat) => (
@@ -124,22 +124,22 @@ export default function FilterableListings({
           <div className="mt-4 flex flex-wrap gap-2">
             <span className="text-sm text-gray-600">Active filters:</span>
             {selectedCity && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-amber-100 text-amber-800 text-sm rounded-full">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#e8ede8] text-[#3a5a3a] text-sm rounded-full">
                 City: {selectedCity}
                 <button
                   onClick={() => setSelectedCity('')}
-                  className="hover:text-amber-900"
+                  className="hover:text-[#1f301f]"
                 >
                   ×
                 </button>
               </span>
             )}
             {selectedCategory && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 bg-amber-100 text-amber-800 text-sm rounded-full">
+              <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#e8ede8] text-[#3a5a3a] text-sm rounded-full">
                 Category: {selectedCategory}
                 <button
                   onClick={() => setSelectedCategory('')}
-                  className="hover:text-amber-900"
+                  className="hover:text-[#1f301f]"
                 >
                   ×
                 </button>
@@ -195,7 +195,7 @@ export default function FilterableListings({
           </h3>
           <p className="text-gray-600 mb-4">
             Try adjusting your filters or{' '}
-            <button onClick={handleReset} className="text-amber-600 hover:text-amber-700 font-semibold">
+            <button onClick={handleReset} className="text-[#5a8a5a] hover:text-[#486e48] font-semibold transition-colors">
               reset all filters
             </button>
           </p>

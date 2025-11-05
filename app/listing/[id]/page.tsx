@@ -50,11 +50,11 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-amber-700 to-amber-900 text-white py-8">
+      <div className="bg-gradient-to-r from-[#486e48] to-[#3a5a3a] text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link 
             href="/" 
-            className="inline-flex items-center text-amber-200 hover:text-white mb-4 transition-colors"
+            className="inline-flex items-center text-[#d1ddd1] hover:text-white mb-4 transition-colors duration-200"
           >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -70,8 +70,8 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
           {/* Main Content - Left Side */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-          {/* Header Section */}
-          <div className="bg-gradient-to-r from-amber-500 to-amber-600 p-8">
+              {/* Header Section */}
+              <div className="bg-gradient-to-r from-[#7da97d] to-[#5a8a5a] p-8">
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
@@ -172,7 +172,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                   {listing.phone && (
                     <a
                       href={`tel:${listing.phone}`}
-                      className="w-full flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                      className="w-full flex items-center justify-center bg-[#5a8a5a] hover:bg-[#486e48] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105"
                     >
                       <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
@@ -186,7 +186,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                       href={listing.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                      className="w-full flex items-center justify-center bg-[#7da97d] hover:bg-[#5a8a5a] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105"
                     >
                       <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clipRule="evenodd" />
@@ -201,7 +201,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                       href={`https://maps.google.com/?q=${listing.latitude},${listing.longitude}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                      className="w-full flex items-center justify-center bg-[#b8ab9a] hover:bg-[#9d8f7d] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105"
                     >
                       <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
@@ -213,7 +213,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                       href={listing.mapsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                      className="w-full flex items-center justify-center bg-[#b8ab9a] hover:bg-[#9d8f7d] text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105"
                     >
                       <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
@@ -281,12 +281,12 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
           </div>
         </div>
 
-        {/* Back Button */}
-        <div className="mt-8 text-center">
-          <Link
-            href="/"
-            className="inline-flex items-center text-amber-600 hover:text-amber-700 font-semibold"
-          >
+            {/* Back Button */}
+            <div className="mt-8 text-center">
+              <Link
+                href="/"
+                className="inline-flex items-center text-[#5a8a5a] hover:text-[#486e48] font-semibold transition-colors"
+              >
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>

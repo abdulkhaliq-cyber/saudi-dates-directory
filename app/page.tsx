@@ -88,15 +88,15 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-amber-700 to-amber-900 text-white">
+      <div className="bg-gradient-to-r from-[#486e48] to-[#3a5a3a] text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-['Cairo']">
             Saudi Dates Directory
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-amber-100">
+          <p className="text-xl md:text-2xl mb-8 text-[#e8ede8]">
             Discover Premium Dates Suppliers Across Saudi Arabia
           </p>
-          <p className="text-lg text-amber-200">
+          <p className="text-lg text-[#d1ddd1]">
             {listings.length} Premium Suppliers Listed
           </p>
         </div>
@@ -112,7 +112,7 @@ export default async function Home() {
             {cities.map((city, index) => (
               <span
                 key={index}
-                className="bg-white px-4 py-2 rounded-full shadow text-sm font-medium text-gray-700 hover:bg-amber-50 transition-colors cursor-pointer"
+                className="bg-white px-4 py-2 rounded-full shadow text-sm font-medium text-gray-700 hover:bg-[#f5f7f5] hover:shadow-md transition-all duration-200 cursor-pointer"
               >
                 {city.name} ({city.count})
               </span>
