@@ -1,6 +1,8 @@
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import ListingCard from '@/components/ListingCard';
+import AdSlot from '@/components/AdSlot';
+import AffiliateBanner from '@/components/AffiliateBanner';
 
 export const metadata = {
   title: 'Saudi Dates Directory - Find Premium Dates Suppliers in Saudi Arabia',
@@ -98,10 +100,19 @@ export default async function Home() {
           All Listings
         </h2>
 
+        {/* Ad Slot - Top Position */}
+        <div className="mb-8">
+          <AdSlot position="top" />
+        </div>
+
         {listings.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {listings.map((listing) => (
-              <ListingCard key={listing.id} listing={listing} />
+              <div key={listing.id} className="flex flex-col">
+                <ListingCard listing={listing} />
+                {/* Affiliate Banner below each listing */}
+                <AffiliateBanner />
+              </div>
             ))}
           </div>
         ) : (

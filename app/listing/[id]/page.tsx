@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import AdSlot from '@/components/AdSlot';
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
@@ -64,8 +65,11 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
       </div>
 
       {/* Listing Details */}
-      <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content - Left Side */}
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Header Section */}
           <div className="bg-gradient-to-r from-amber-500 to-amber-600 p-8">
             <div className="flex items-start justify-between">
@@ -239,6 +243,41 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
                 <p className="text-gray-900">{listing.seoTitle}</p>
               </div>
             )}
+          </div>
+        </div>
+          </div>
+
+          {/* Sidebar - Right Side */}
+          <div className="lg:col-span-1">
+            <div className="space-y-6">
+              {/* Sidebar Ad Slot */}
+              <AdSlot position="sidebar" />
+              
+              {/* Additional sidebar content can go here */}
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <h3 className="font-bold text-gray-900 mb-4">Quick Info</h3>
+                <div className="space-y-3 text-sm">
+                  {listing.category && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-600">Category:</span>
+                      <span className="font-medium">{listing.category}</span>
+                    </div>
+                  )}
+                  {listing.city && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-600">Location:</span>
+                      <span className="font-medium">{listing.city}</span>
+                    </div>
+                  )}
+                  {listing.rating && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-600">Rating:</span>
+                      <span className="font-medium">{listing.rating.toFixed(1)} ⭐</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
