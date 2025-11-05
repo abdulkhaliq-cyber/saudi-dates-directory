@@ -1,8 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
-import ListingCard from '@/components/ListingCard';
 import AdSlot from '@/components/AdSlot';
-import AffiliateBanner from '@/components/AffiliateBanner';
+import FilterableListings from '@/components/FilterableListings';
 
 export const metadata = {
   title: 'Saudi Dates Directory - Find Premium Dates Suppliers in Saudi Arabia',
@@ -42,7 +41,6 @@ async function getCities() {
           city: 'desc',
         },
       },
-      take: 10,
     });
     return result.map((item) => ({
       name: item.city!,
@@ -54,9 +52,38 @@ async function getCities() {
   }
 }
 
+async function getCategories() {
+  try {
+    const result = await prisma.listing.groupBy({
+      by: ['category'],
+      _count: {
+        category: true,
+      },
+      where: {
+        category: {
+          not: null,
+        },
+      },
+      orderBy: {
+        _count: {
+          category: 'desc',
+        },
+      },
+    });
+    return result.map((item) => ({
+      category: item.category!,
+      count: item._count.category,
+    }));
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return [];
+  }
+}
+
 export default async function Home() {
   const listings = await getAllListings();
   const cities = await getCities();
+  const categories = await getCategories();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -94,44 +121,19 @@ export default async function Home() {
         </div>
       )}
 
-      {/* Listings Grid */}
+      {/* Listings Grid with Filters */}
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          All Listings
-        </h2>
-
         {/* Ad Slot - Top Position */}
         <div className="mb-8">
           <AdSlot position="top" />
         </div>
 
-        {listings.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {listings.map((listing) => (
-              <div key={listing.id} className="flex flex-col">
-                <ListingCard listing={listing} />
-                {/* Affiliate Banner below each listing */}
-                <AffiliateBanner />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="bg-white rounded-lg shadow p-12 text-center">
-            <div className="text-6xl mb-4">🌴</div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-2">
-              No Listings Yet
-            </h3>
-            <p className="text-gray-600 mb-6 max-w-md mx-auto">
-              This directory is ready to accept listings. Connect it to your data source or use the API to add listings.
-            </p>
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 max-w-lg mx-auto">
-              <p className="text-sm text-gray-700 mb-2">Add listings via API:</p>
-              <code className="bg-gray-900 text-green-400 px-4 py-2 rounded text-xs block">
-                POST /api/addListing
-              </code>
-            </div>
-          </div>
-        )}
+        {/* Filterable Listings Component */}
+        <FilterableListings 
+          initialListings={listings}
+          cities={cities}
+          categories={categories}
+        />
       </div>
 
       {/* Footer */}

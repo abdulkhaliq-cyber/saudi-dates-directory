@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
     
     // Filters
     const city = searchParams.get('city');
+    const category = searchParams.get('category');
     const minRating = searchParams.get('minRating');
     const search = searchParams.get('search');
     
@@ -21,6 +22,10 @@ export async function GET(request: NextRequest) {
     
     if (city) {
       where.city = city;
+    }
+    
+    if (category) {
+      where.category = category;
     }
     
     if (minRating) {
