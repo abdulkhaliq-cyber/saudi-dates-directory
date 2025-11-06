@@ -28,13 +28,9 @@ model Listing {
   latitude    Float?   // Maps to 'Latitude'
   longitude   Float?   // Maps to 'Longitude'
   
-  // SEO Field
+  // SEO Fields
   seoTitle    String?  // Maps to 'SEO Title'
-  
-  // Optional/Metadata Fields (You can keep or remove Country/Type/TimeZone)
-  // country     String? 
-  // type        String? 
-  // timeZone    String?
+  description String?  @db.Text // Maps to 'Description' - SEO-friendly business description
   
   // System Fields
   createdAt   DateTime @default(now())

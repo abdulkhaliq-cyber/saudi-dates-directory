@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import AdSlot from '@/components/AdSlot';
+import ListingSeo from '@/components/ListingSeo';
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
@@ -16,12 +17,52 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     };
   }
 
+  const title = listing.seoTitle || `${listing.name} - Saudi Dates Directory`;
+  const description = `${listing.name} – located in ${listing.city || 'Saudi Arabia'}, rated ${listing.rating ? listing.rating.toFixed(1) : 'N/A'} stars. ${listing.category ? `Category: ${listing.category}.` : ''} Premium dates supplier in Saudi Arabia.`;
+  const domain = 'https://yourdomain.com'; // TODO: Replace with your actual domain
+  const canonical = `${domain}/listing/${listing.id}`;
+
   return {
-    title: listing.seoTitle || `${listing.name} - Saudi Dates Directory`,
-    description: `${listing.name} in ${listing.city || 'Saudi Arabia'}. ${listing.category || 'Dates supplier'}. Contact: ${listing.phone || 'See details'}.`,
+    title: title,
+    description: description,
+    keywords: `${listing.name}, dates supplier, ${listing.city || 'Saudi Arabia'}, ${listing.category || 'dates'}, premium dates, ajwa dates, medjool dates`,
+    alternates: {
+      canonical: canonical,
+    },
     openGraph: {
-      title: listing.seoTitle || listing.name,
-      description: `Find ${listing.name} - Premium dates supplier in Saudi Arabia`,
+      type: 'website',
+      title: title,
+      description: description,
+      url: canonical,
+      siteName: 'Saudi Dates Directory',
+      locale: 'ar_SA',
+      images: [
+        {
+          url: `${domain}/og-image-placeholder.jpg`, // TODO: Replace with actual image
+          width: 1200,
+          height: 630,
+          alt: listing.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: title,
+      description: description,
+      site: '@saudidates', // TODO: Replace with your Twitter handle
+      creator: '@saudidates',
+      images: [`${domain}/og-image-placeholder.jpg`],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
   };
 }
@@ -48,9 +89,16 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
   }
 
   return (
-    <div className="min-h-screen bg-[#F5E6CA]">
-      {/* Header */}
-      <div className="bg-gradient-to-br from-[#3B7A57] via-[#2D5F43] to-[#1F4430] text-white py-10 shadow-xl">
+    <>
+      {/* SEO Component */}
+      <ListingSeo 
+        listing={listing}
+        domain="https://yourdomain.com" // TODO: Replace with your actual domain
+      />
+      
+      <div className="min-h-screen bg-[#F5E6CA]">
+        {/* Header */}
+        <div className="bg-gradient-to-br from-[#3B7A57] via-[#2D5F43] to-[#1F4430] text-white py-10 shadow-xl">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <Link 
             href="/" 
@@ -294,7 +342,8 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
           </Link>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 

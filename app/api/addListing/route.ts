@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
       latitude,
       longitude,
       seoTitle,
+      description,
     } = body;
     
     // Validate required fields
@@ -47,6 +48,7 @@ export async function POST(request: NextRequest) {
         latitude: latitude ? parseFloat(latitude) : undefined,
         longitude: longitude ? parseFloat(longitude) : undefined,
         seoTitle: seoTitle || undefined,
+        description: description || undefined,
       },
       create: {
         name,
@@ -60,6 +62,7 @@ export async function POST(request: NextRequest) {
         latitude: latitude ? parseFloat(latitude) : null,
         longitude: longitude ? parseFloat(longitude) : null,
         seoTitle: seoTitle || null,
+        description: description || null,
       },
     });
     
@@ -115,6 +118,7 @@ export async function GET(request: NextRequest) {
       'latitude',
       'longitude',
       'seoTitle',
+      'description',
     ],
     example: {
       name: 'Al Qassim Dates Company',
@@ -128,6 +132,7 @@ export async function GET(request: NextRequest) {
       latitude: 24.7136,
       longitude: 46.6753,
       seoTitle: 'Al Qassim Dates - Premium Saudi Dates in Riyadh',
+      description: 'Premium dates supplier in Riyadh offering authentic Saudi dates varieties. Trusted wholesale and retail provider serving customers across Saudi Arabia.',
     },
   });
 }
