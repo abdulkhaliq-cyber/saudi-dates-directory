@@ -86,17 +86,17 @@ export default async function Home() {
   const categories = await getCategories();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#F5E6CA]">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-[#486e48] to-[#3a5a3a] text-white">
-        <div className="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-['Cairo']">
-            Saudi Dates Directory
+      <div className="bg-gradient-to-br from-[#3B7A57] via-[#2D5F43] to-[#1F4430] text-white shadow-xl">
+        <div className="max-w-7xl mx-auto px-6 py-20 sm:px-8 lg:px-12">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 font-['Amiri'] tracking-wide">
+            🌴 Saudi Dates Directory
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-[#e8ede8]">
+          <p className="text-xl md:text-2xl mb-6 text-[#FFF5E6] font-light">
             Discover Premium Dates Suppliers Across Saudi Arabia
           </p>
-          <p className="text-lg text-[#d1ddd1]">
+          <p className="text-lg text-[#E6D4B0] bg-white/10 inline-block px-6 py-2 rounded-full backdrop-blur-sm">
             {listings.length} Premium Suppliers Listed
           </p>
         </div>
@@ -104,15 +104,15 @@ export default async function Home() {
 
       {/* Cities Filter */}
       {cities.length > 0 && (
-        <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">
-            Filter by City
+        <div className="max-w-7xl mx-auto px-6 py-10 sm:px-8 lg:px-12">
+          <h2 className="text-2xl font-bold text-[#2D5F43] mb-5 font-['Cairo']">
+            📍 Browse by City
           </h2>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
             {cities.map((city, index) => (
               <span
                 key={index}
-                className="bg-white px-4 py-2 rounded-full shadow text-sm font-medium text-gray-700 hover:bg-[#f5f7f5] hover:shadow-md transition-all duration-200 cursor-pointer"
+                className="bg-white px-5 py-2.5 rounded-full shadow-md text-sm font-medium text-[#2D5F43] hover:bg-[#3B7A57] hover:text-white hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer border border-[#E6D4B0]"
               >
                 {city.name} ({city.count})
               </span>
@@ -122,9 +122,9 @@ export default async function Home() {
       )}
 
       {/* Listings Grid with Filters */}
-      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 py-10 sm:px-8 lg:px-12">
         {/* Ad Slot - Top Position */}
-        <div className="mb-8">
+        <div className="mb-10">
           <AdSlot position="top" />
         </div>
 
@@ -137,10 +137,13 @@ export default async function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white mt-12">
-        <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-400">
+      <footer className="bg-gradient-to-r from-[#1F4430] to-[#2D5F43] text-white mt-16 shadow-2xl">
+        <div className="max-w-7xl mx-auto px-6 py-12 sm:px-8 lg:px-12 text-center">
+          <p className="text-[#E6D4B0] text-lg font-['Amiri']">
             © 2025 Saudi Dates Directory. All rights reserved.
+          </p>
+          <p className="text-[#FFF5E6] text-sm mt-2">
+            🌴 Connecting Saudi Arabia's finest dates suppliers
           </p>
         </div>
       </footer>
