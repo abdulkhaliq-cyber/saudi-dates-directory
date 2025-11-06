@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import ListingCard from './ListingCard';
 import AffiliateBanner from './AffiliateBanner';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface Listing {
   id: number;
@@ -29,6 +30,7 @@ export default function FilterableListings({
   cities,
   categories 
 }: FilterableListingsProps) {
+  const { t, isRTL } = useLanguage();
   const [selectedCity, setSelectedCity] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   
@@ -64,21 +66,24 @@ export default function FilterableListings({
     <div className="space-y-8">
       {/* Filter Controls */}
       <div className="bg-white rounded-xl shadow-xl p-8 border-2 border-[#E6D4B0]">
-        <h3 className="text-2xl font-bold text-[#2D5F43] mb-6 font-['Cairo']">🔍 Filter Listings</h3>
+        <h3 className="text-2xl font-bold text-[#2D5F43] mb-6 font-['Cairo']">
+          🔍 {t('all.listings')}
+        </h3>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* City Filter */}
           <div>
             <label htmlFor="city-filter" className="block text-sm font-bold text-[#2D5F43] mb-2">
-              📍 Filter by City
+              📍 {t('filter.city')}
             </label>
             <select
               id="city-filter"
               value={selectedCity}
               onChange={(e) => setSelectedCity(e.target.value)}
               className="w-full px-4 py-3 border-2 border-[#E6D4B0] rounded-xl focus:ring-2 focus:ring-[#3B7A57] focus:border-[#3B7A57] bg-white text-gray-900 font-medium transition-all shadow-sm hover:shadow-md"
+              dir={isRTL ? 'rtl' : 'ltr'}
             >
-              <option value="" className="text-gray-600">All Cities</option>
+              <option value="" className="text-gray-600">{t('all.cities')}</option>
               {cities.map((city) => (
                 <option key={city.name} value={city.name} className="text-gray-900">
                   {city.name} ({city.count})
@@ -90,15 +95,16 @@ export default function FilterableListings({
           {/* Category Filter */}
           <div>
             <label htmlFor="category-filter" className="block text-sm font-bold text-[#2D5F43] mb-2">
-              🏷️ Filter by Category
+              🏷️ {t('filter.category')}
             </label>
             <select
               id="category-filter"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
               className="w-full px-4 py-3 border-2 border-[#E6D4B0] rounded-xl focus:ring-2 focus:ring-[#3B7A57] focus:border-[#3B7A57] bg-white text-gray-900 font-medium transition-all shadow-sm hover:shadow-md"
+              dir={isRTL ? 'rtl' : 'ltr'}
             >
-              <option value="" className="text-gray-600">All Categories</option>
+              <option value="" className="text-gray-600">{t('all.categories')}</option>
               {categories.map((cat) => (
                 <option key={cat.category} value={cat.category} className="text-gray-900">
                   {cat.category} ({cat.count})
@@ -114,15 +120,15 @@ export default function FilterableListings({
               disabled={!isFiltering}
               className="w-full px-4 py-3 bg-[#F5E6CA] hover:bg-[#E6D4B0] disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed text-[#2D5F43] font-bold rounded-xl transition-all border-2 border-[#E6D4B0] hover:border-[#3B7A57] shadow-sm hover:shadow-md"
             >
-              🔄 Reset Filters
+              🔄 {t('filter.reset')}
             </button>
           </div>
         </div>
 
         {/* Active Filters Display */}
         {isFiltering && (
-          <div className="mt-6 flex flex-wrap gap-3 items-center">
-            <span className="text-sm font-bold text-[#2D5F43]">✨ Active filters:</span>
+          <div className={`mt-6 flex flex-wrap gap-3 items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <span className="text-sm font-bold text-[#2D5F43]">✨ {t('active.filters')}:</span>
             {selectedCity && (
               <span className="inline-flex items-center gap-2 px-4 py-2 bg-[#3B7A57] text-white text-sm font-medium rounded-full shadow-md">
                 📍 {selectedCity}
@@ -150,15 +156,15 @@ export default function FilterableListings({
       </div>
 
       {/* Results Count */}
-      <div className="flex items-center justify-between bg-white p-6 rounded-xl shadow-md border-2 border-[#E6D4B0]">
+      <div className={`flex items-center justify-between bg-white p-6 rounded-xl shadow-md border-2 border-[#E6D4B0] ${isRTL ? 'flex-row-reverse' : ''}`}>
         <h2 className="text-2xl font-bold text-[#2D5F43] font-['Cairo']">
-          {isFiltering ? '🔍 Filtered Results' : '📋 All Listings'}
+          {isFiltering ? `🔍 ${t('filtered.results')}` : `📋 ${t('all.listings')}`}
         </h2>
         <span className="text-[#3B7A57] font-bold text-lg bg-[#F5E6CA] px-4 py-2 rounded-full">
           {isLoading ? (
-            <span className="animate-pulse">Loading...</span>
+            <span className="animate-pulse">{t('loading')}</span>
           ) : (
-            `${displayListings.length} ${displayListings.length === 1 ? 'listing' : 'listings'}`
+            `${displayListings.length} ${displayListings.length === 1 ? t('listing') : t('listings')}`
           )}
         </span>
       </div>
@@ -191,12 +197,12 @@ export default function FilterableListings({
         <div className="bg-white rounded-xl shadow-xl p-16 text-center border-2 border-[#E6D4B0]">
           <div className="text-7xl mb-6">🔍</div>
           <h3 className="text-3xl font-bold text-[#2D5F43] mb-4 font-['Cairo']">
-            No Listings Found
+            {t('no.listings')}
           </h3>
           <p className="text-gray-600 text-lg mb-6">
-            Try adjusting your filters or{' '}
+            {t('no.listings.text')}{' '}
             <button onClick={handleReset} className="text-[#3B7A57] hover:text-[#2D5F43] font-bold transition-colors underline">
-              reset all filters
+              {t('reset.all')}
             </button>
           </p>
         </div>
