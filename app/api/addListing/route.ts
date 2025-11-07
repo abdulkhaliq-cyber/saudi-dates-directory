@@ -5,7 +5,23 @@ import { prisma } from '@/lib/prisma';
 export async function POST(request: NextRequest) {
   try {
     // Parse the request body
-    const body = await request.json();
+    let body;
+    try {
+      body = await request.json();
+    } catch (jsonError: any) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Invalid JSON format',
+          details: jsonError.message,
+          hint: 'Check that numeric fields (rating, latitude, longitude) are not empty. Use null instead of empty values.'
+        },
+        { status: 400 }
+      );
+    }
+    
+    // Log the received body for debugging
+    console.log('Received body:', JSON.stringify(body, null, 2));
     
     // Extract listing data from the request
     const {
@@ -24,15 +40,22 @@ export async function POST(request: NextRequest) {
     } = body;
     
     // Validate required fields
-    if (!name) {
+    if (!name || name === 'null' || name === '') {
       return NextResponse.json(
         { 
           success: false, 
-          error: 'Name is required' 
+          error: 'Name is required and cannot be empty' 
         },
         { status: 400 }
       );
     }
+    
+    // Clean up numeric values - convert "null" strings to actual null
+    const cleanRating = rating === 'null' || rating === '' || rating === null ? null : parseFloat(rating);
+    const cleanLatitude = latitude === 'null' || latitude === '' || latitude === null ? null : parseFloat(latitude);
+    const cleanLongitude = longitude === 'null' || longitude === '' || longitude === null ? null : parseFloat(longitude);
+    
+    console.log('Cleaned values:', { cleanRating, cleanLatitude, cleanLongitude });
     
     // Upsert the listing (update if exists, create if not)
     const listing = await prisma.listing.upsert({
@@ -42,11 +65,11 @@ export async function POST(request: NextRequest) {
         city: city || undefined,
         phone: phone || undefined,
         website: website || undefined,
-        rating: rating ? parseFloat(rating) : undefined,
+        rating: cleanRating !== null ? cleanRating : undefined,
         mapsUrl: mapsUrl || undefined,
         address: address || undefined,
-        latitude: latitude ? parseFloat(latitude) : undefined,
-        longitude: longitude ? parseFloat(longitude) : undefined,
+        latitude: cleanLatitude !== null ? cleanLatitude : undefined,
+        longitude: cleanLongitude !== null ? cleanLongitude : undefined,
         seoTitle: seoTitle || undefined,
         description: description || undefined,
       },
@@ -56,11 +79,11 @@ export async function POST(request: NextRequest) {
         city: city || null,
         phone: phone || null,
         website: website || null,
-        rating: rating ? parseFloat(rating) : null,
+        rating: cleanRating,
         mapsUrl: mapsUrl || null,
         address: address || null,
-        latitude: latitude ? parseFloat(latitude) : null,
-        longitude: longitude ? parseFloat(longitude) : null,
+        latitude: cleanLatitude,
+        longitude: cleanLongitude,
         seoTitle: seoTitle || null,
         description: description || null,
       },
@@ -77,6 +100,8 @@ export async function POST(request: NextRequest) {
     
   } catch (error: any) {
     console.error('Error adding/updating listing:', error);
+    console.error('Error stack:', error.stack);
+    console.error('Error code:', error.code);
     
     // Handle unique constraint violation
     if (error.code === 'P2002') {
@@ -89,11 +114,25 @@ export async function POST(request: NextRequest) {
       );
     }
     
+    // Handle Prisma validation errors
+    if (error.code?.startsWith('P')) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Database validation error',
+          details: error.message,
+          code: error.code
+        },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json(
       { 
         success: false, 
         error: 'Failed to add/update listing',
-        details: error.message 
+        details: error.message,
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
       },
       { status: 500 }
     );
