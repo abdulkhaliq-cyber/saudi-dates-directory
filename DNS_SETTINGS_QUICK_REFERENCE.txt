@@ -1,0 +1,59 @@
+╔══════════════════════════════════════════════════════════════╗
+║           DatesSouq.com - DNS Settings Reference            ║
+╚══════════════════════════════════════════════════════════════╝
+
+🎯 WHERE TO ADD THESE: Your domain registrar (Namecheap/GoDaddy/etc.)
+
+┌──────────────────────────────────────────────────────────────┐
+│ Record 1: A Record (Points domain to Vercel)                │
+├──────────────────────────────────────────────────────────────┤
+│ Type:  A Record                                              │
+│ Host:  @                                                     │
+│ Value: 76.76.21.21                                           │
+│ TTL:   Automatic (or 3600)                                   │
+└──────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────┐
+│ Record 2: CNAME (Points www to main domain)                 │
+├──────────────────────────────────────────────────────────────┤
+│ Type:  CNAME Record                                          │
+│ Host:  www                                                   │
+│ Value: cname.vercel-dns.com                                  │
+│ TTL:   Automatic (or 3600)                                   │
+└──────────────────────────────────────────────────────────────┘
+
+⚠️  IMPORTANT:
+    - Delete any default "parking" records first
+    - Make sure values are EXACT (including the dot at end of CNAME)
+    - Wait 5-30 minutes for changes to take effect
+
+✅ TEST IF IT'S WORKING:
+   Visit: https://www.whatsmydns.net/#A/datessouq.com
+   Should show: 76.76.21.21
+
+🔗 VERCEL DASHBOARD:
+   https://vercel.com/abdulkhaliqs-projects/saudi-dates-directory
+
+📧 ENVIRONMENT VARIABLE TO ADD IN VERCEL:
+   Key:   SITE_URL
+   Value: https://datessouq.com
+   Envs:  Production, Preview, Development
+
+═══════════════════════════════════════════════════════════════
+
+📋 Quick Checklist:
+
+□ Add A record (@ → 76.76.21.21)
+□ Add CNAME record (www → cname.vercel-dns.com)
+□ Remove old/conflicting records
+□ Add SITE_URL to Vercel environment variables
+□ Wait 5-30 minutes
+□ Test: visit https://datessouq.com
+□ Verify SSL certificate (🔒 padlock)
+□ Update Make.com API URL
+□ Enable WHOIS privacy protection
+□ Enable domain lock
+□ Enable auto-renewal
+
+═══════════════════════════════════════════════════════════════
+
