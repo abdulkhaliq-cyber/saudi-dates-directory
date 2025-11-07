@@ -57,6 +57,25 @@ const translations: Translations = {
     'quick.info': 'معلومات سريعة',
     'location': 'الموقع',
     
+    // Listing Detail (with prefix)
+    'back.to.directory': 'العودة إلى الدليل',
+    'back.to.all': 'العودة إلى جميع القوائم',
+    'listing.contact.info': 'معلومات الاتصال',
+    'listing.quick.actions': 'إجراءات سريعة',
+    'listing.phone': 'الهاتف',
+    'listing.website': 'الموقع الإلكتروني',
+    'listing.address': 'العنوان',
+    'listing.city': 'المدينة',
+    'listing.visit.website': 'زيارة الموقع',
+    'listing.view.maps': 'عرض على خرائط جوجل',
+    'listing.coordinates': 'إحداثيات الموقع',
+    'listing.lat': 'خط العرض',
+    'listing.lng': 'خط الطول',
+    'listing.quick.info': 'معلومات سريعة',
+    'listing.category': 'الفئة',
+    'listing.location': 'الموقع',
+    'listing.rating': 'التقييم',
+    
     // Dropdowns
     'all.cities': 'كل المدن',
     'all.categories': 'كل الفئات',
@@ -110,6 +129,25 @@ const translations: Translations = {
     'location.coords': 'Location Coordinates',
     'quick.info': 'Quick Info',
     'location': 'Location',
+    
+    // Listing Detail (with prefix)
+    'back.to.directory': 'Back to Directory',
+    'back.to.all': 'Back to All Listings',
+    'listing.contact.info': 'Contact Information',
+    'listing.quick.actions': 'Quick Actions',
+    'listing.phone': 'Phone',
+    'listing.website': 'Website',
+    'listing.address': 'Address',
+    'listing.city': 'City',
+    'listing.visit.website': 'Visit Website',
+    'listing.view.maps': 'View on Google Maps',
+    'listing.coordinates': 'Location Coordinates',
+    'listing.lat': 'Latitude',
+    'listing.lng': 'Longitude',
+    'listing.quick.info': 'Quick Info',
+    'listing.category': 'Category',
+    'listing.location': 'Location',
+    'listing.rating': 'Rating',
     
     // Dropdowns
     'all.cities': 'All Cities',
