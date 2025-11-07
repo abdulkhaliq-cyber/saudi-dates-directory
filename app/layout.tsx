@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "دليل التمور السعودية | Saudi Dates Directory",
-  description: "اكتشف أفضل موردي التمور في المملكة العربية السعودية | Discover the best dates suppliers in Saudi Arabia",
+  title: "DatesSouq | سوق التمور - دليل التمور السعودية",
+  description: "اكتشف أفضل موردي التمور في المملكة العربية السعودية | Discover the best dates suppliers in Saudi Arabia at DatesSouq.com",
 };
 
 export default function RootLayout({

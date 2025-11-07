@@ -17,9 +17,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     };
   }
 
-  const title = listing.seoTitle || `${listing.name} - Saudi Dates Directory`;
+  const title = listing.seoTitle || `${listing.name} - DatesSouq`;
   const description = `${listing.name} – located in ${listing.city || 'Saudi Arabia'}, rated ${listing.rating ? listing.rating.toFixed(1) : 'N/A'} stars. ${listing.category ? `Category: ${listing.category}.` : ''} Premium dates supplier in Saudi Arabia.`;
-  const domain = 'https://yourdomain.com'; // TODO: Replace with your actual domain
+  const domain = 'https://datessouq.com';
   const canonical = `${domain}/listing/${listing.id}`;
 
   return {
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       title: title,
       description: description,
       url: canonical,
-      siteName: 'Saudi Dates Directory',
+      siteName: 'DatesSouq',
       locale: 'ar_SA',
       images: [
         {
@@ -93,7 +93,7 @@ export default async function ListingDetailPage({ params }: { params: Promise<{ 
       {/* SEO Component */}
       <ListingSeo 
         listing={listing}
-        domain="https://yourdomain.com" // TODO: Replace with your actual domain
+        domain="https://datessouq.com"
       />
       
       <div className="min-h-screen bg-[#F5E6CA]">

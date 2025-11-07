@@ -13,7 +13,7 @@ export async function GET() {
     },
   });
 
-  const domain = process.env.SITE_URL || 'https://yourdomain.com';
+  const domain = process.env.SITE_URL || 'https://datessouq.com';
 
   // Generate sitemap fields for each listing
   const fields = listings.map((listing) => ({

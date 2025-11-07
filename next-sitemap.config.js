@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://yourdomain.com', // TODO: Replace with your actual domain
+  siteUrl: process.env.SITE_URL || 'https://datessouq.com',
   generateRobotsTxt: true, // Generate robots.txt file
   generateIndexSitemap: true, // Generate sitemap index for large sites
   sitemapSize: 7000, // Split sitemap if more than 7000 URLs
@@ -41,10 +41,10 @@ module.exports = {
         disallow: ['/api/', '/_next/', '/admin/'],
       },
     ],
-    additionalSitemaps: [
-      // Dynamic server-generated sitemap for all listings
-      'https://yourdomain.com/server-sitemap.xml', // TODO: Replace with your actual domain
-    ],
+        additionalSitemaps: [
+          // Dynamic server-generated sitemap for all listings
+          'https://datessouq.com/server-sitemap.xml',
+        ],
   },
   
   // Custom transform function for each URL
@@ -77,11 +77,11 @@ module.exports = {
       lastmod: new Date().toISOString(),
       alternateRefs: [
         {
-          href: `https://yourdomain.com${path}`, // English version
+          href: `https://datessouq.com${path}`, // English version
           hreflang: 'en',
         },
         {
-          href: `https://yourdomain.com${path}`, // Arabic version
+          href: `https://datessouq.com${path}`, // Arabic version
           hreflang: 'ar',
         },
       ],

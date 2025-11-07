@@ -17,7 +17,7 @@ interface ListingSeoProps {
   domain?: string;
 }
 
-export default function ListingSeo({ listing, domain = 'https://yourdomain.com' }: ListingSeoProps) {
+export default function ListingSeo({ listing, domain = 'https://datessouq.com' }: ListingSeoProps) {
   const canonical = `${domain}/listing/${listing.id}`;
   
   // Create JSON-LD structured data for better SEO

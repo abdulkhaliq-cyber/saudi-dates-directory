@@ -2,8 +2,8 @@ import { prisma } from '@/lib/prisma';
 import HomePageClient from '@/components/HomePageClient';
 
 export const metadata = {
-  title: 'Saudi Dates Directory - Find Premium Dates Suppliers in Saudi Arabia',
-  description: 'Discover the best dates suppliers, wholesalers, and shops across Saudi Arabia. Browse by city, ratings, and reviews.',
+  title: 'DatesSouq - Find Premium Dates Suppliers in Saudi Arabia',
+  description: 'Discover the best dates suppliers, wholesalers, and shops across Saudi Arabia. Browse by city, ratings, and reviews at DatesSouq.com',
 };
 
 // Fetch all listings from database
