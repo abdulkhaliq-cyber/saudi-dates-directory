@@ -86,6 +86,17 @@ const translations: Translations = {
     
     // Loading
     'loading': 'جاري التحميل...',
+    
+    // Best of Pages
+    'best.of': 'الأفضل في',
+    'best.title': 'أفضل التمور',
+    'best.subtitle': 'أفضل التمور في المملكة العربية السعودية',
+    'best.by.city': 'أفضل التمور حسب المدينة',
+    'best.by.category': 'أفضل التمور حسب الفئة',
+    'best.suppliers': 'أفضل الموردين',
+    'best.ranked': 'مرتبة حسب التقييم',
+    'best.updated': 'محدث',
+    'best.view.all': 'تصفح جميع صفحات الأفضل',
   },
   en: {
     // Header
@@ -159,6 +170,17 @@ const translations: Translations = {
     
     // Loading
     'loading': 'Loading...',
+    
+    // Best of Pages
+    'best.of': 'Best of',
+    'best.title': 'Best Dates',
+    'best.subtitle': 'Best Dates in Saudi Arabia',
+    'best.by.city': 'Best Dates by City',
+    'best.by.category': 'Best Dates by Category',
+    'best.suppliers': 'Top Suppliers',
+    'best.ranked': 'Ranked by Rating',
+    'best.updated': 'Updated',
+    'best.view.all': 'Browse All Best of Pages',
   },
 };
 

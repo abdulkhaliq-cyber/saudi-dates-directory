@@ -1,5 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import HomePageClient from '@/components/HomePageClient';
+import OrganizationSchema from '@/components/OrganizationSchema';
+import ItemListSchema from '@/components/ItemListSchema';
 
 export const metadata = {
   title: 'DatesSouq - Find Premium Dates Suppliers in Saudi Arabia',
@@ -84,10 +86,21 @@ export default async function Home() {
   const categories = await getCategories();
 
   return (
-    <HomePageClient 
-      listings={listings}
-      cities={cities}
-      categories={categories}
-    />
+    <>
+      {/* SEO Schema Markup */}
+      <OrganizationSchema />
+      <ItemListSchema 
+        listings={listings}
+        pageType="homepage"
+        title="Premium Dates Suppliers in Saudi Arabia - DatesSouq"
+        description="Complete directory of top-rated dates suppliers, wholesalers, and shops across Saudi Arabia"
+      />
+      
+      <HomePageClient 
+        listings={listings}
+        cities={cities}
+        categories={categories}
+      />
+    </>
   );
 }
