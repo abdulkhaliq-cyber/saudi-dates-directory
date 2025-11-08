@@ -17,4 +17,4 @@ Host: https://yourdomain.com
 
 # Sitemaps
 Sitemap: https://yourdomain.com/sitemap.xml
-Sitemap: https://yourdomain.com/server-sitemap.xml
+Sitemap: https://datessouq.com/server-sitemap.xml
