@@ -1,15 +1,15 @@
-// This is a preview of the enhanced Best of page
-// To activate: rename this file to page.tsx (replacing the current one)
-
 'use client';
 
-import { use, useState, useMemo } from 'react';
-import BestOfCard from '@/components/BestOfCard';
-import ComparisonTable from '@/components/ComparisonTable';
-import BestOfStats from '@/components/BestOfStats';
-import BestOfFilters, { FilterState } from '@/components/BestOfFilters';
-import BuyersGuide from '@/components/BuyersGuide';
-import ListingsMap from '@/components/ListingsMap';
+// This is a preview of the enhanced Best of page
+// Now implemented as a client component to handle filtering
+
+import { useState, useMemo } from 'react';
+import BestOfCard from './BestOfCard'; // Adjusted import
+import ComparisonTable from './ComparisonTable'; // Adjusted import
+import BestOfStats from './BestOfStats'; // Adjusted import
+import BestOfFilters, { FilterState } from './BestOfFilters'; // Adjusted import
+import BuyersGuide from './BuyersGuide'; // Adjusted import
+import ListingsMap from './ListingsMap'; // Adjusted import
 import { useLanguage } from '@/contexts/LanguageContext';
 import Link from 'next/link';
 
@@ -28,16 +28,17 @@ interface Listing {
 }
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: { slug: string }; // Simplified prop structure for client component
   initialData: {
     listings: Listing[];
     type: 'city' | 'category';
-    name: string;
+    name: string | null; // Name can be null if deduced from slug
   };
 }
 
 export default function BestOfPageEnhanced({ params, initialData }: PageProps) {
-  const { slug } = use(params);
+  // const { slug } = use(params); // Use 'params' prop directly instead of 'use'
+  const { slug } = params;
   const { t } = useLanguage();
   const { listings: allListings, type, name } = initialData;
   
@@ -65,19 +66,26 @@ export default function BestOfPageEnhanced({ params, initialData }: PageProps) {
 
   // Calculate statistics
   const stats = useMemo(() => {
+    // Only calculate stats if there are listings after filtering to avoid NaN
+    const listToAnalyze = filteredListings.length > 0 ? filteredListings : allListings;
+    
     return {
       totalCount: filteredListings.length,
-      avgRating: filteredListings.reduce((sum, l) => sum + (l.rating || 0), 0) / filteredListings.length,
+      avgRating: listToAnalyze.reduce((sum, l) => sum + (l.rating || 0), 0) / listToAnalyze.length,
       hasPhone: filteredListings.filter(l => l.phone).length,
       hasWebsite: filteredListings.filter(l => l.website).length,
-      topRating: Math.max(...filteredListings.map(l => l.rating || 0)),
+      topRating: Math.max(...listToAnalyze.map(l => l.rating || 0)),
     };
-  }, [filteredListings]);
+  }, [allListings, filteredListings, filters]);
 
   const displayName = name || slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   const pageTitle = type === 'city' 
     ? `Best Dates in ${displayName}`
     : `Best ${displayName} Dates`;
+  
+  const pageTitleAr = type === 'city'
+    ? `أفضل التمور في ${displayName}`
+    : `أفضل تمور ${displayName}`;
 
   return (
     <div className="min-h-screen bg-[#F5E6CA]">
@@ -108,10 +116,7 @@ export default function BestOfPageEnhanced({ params, initialData }: PageProps) {
                 )}
               </div>
               <p className="text-xl text-[#FFF5E6]">
-                {type === 'city' 
-                  ? `أفضل ${stats.totalCount} موردي التمور في ${displayName}`
-                  : `أفضل ${stats.totalCount} موردي تمور ${displayName}`
-                }
+                {pageTitleAr}
               </p>
             </div>
           </div>
@@ -119,8 +124,8 @@ export default function BestOfPageEnhanced({ params, initialData }: PageProps) {
           {/* Description */}
           <p className="text-lg text-[#F5E6CA] max-w-3xl mb-6">
             {type === 'city' 
-              ? `Discover the top ${stats.totalCount} highest-rated dates suppliers in ${displayName}. Carefully ranked by customer reviews and verified ratings. Compare features, prices, and find the perfect supplier for your needs.`
-              : `Browse the ${stats.totalCount} best ${displayName} dates suppliers in Saudi Arabia. Premium quality, verified ratings, and expert recommendations to help you make the right choice.`
+              ? `Discover the top ${allListings.length} highest-rated dates suppliers in ${displayName}. Carefully ranked by customer reviews and verified ratings. Compare features, prices, and find the perfect supplier for your needs.`
+              : `Browse the ${allListings.length} best ${displayName} dates suppliers in Saudi Arabia. Premium quality, verified ratings, and expert recommendations to help you make the right choice.`
             }
           </p>
 
@@ -130,7 +135,7 @@ export default function BestOfPageEnhanced({ params, initialData }: PageProps) {
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
               </svg>
-              <span>{stats.totalCount} {t('best.suppliers')}</span>
+              <span>{allListings.length} {t('best.suppliers')}</span>
             </div>
             <div className="bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-2">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -151,18 +156,25 @@ export default function BestOfPageEnhanced({ params, initialData }: PageProps) {
       {/* Content */}
       <div className="max-w-7xl mx-auto px-6 py-12 sm:px-8 lg:px-12">
         {/* Stats Section */}
-        <BestOfStats {...stats} />
+        {/* Use allListings length for coverage % if filteredListings is 0 */}
+        <BestOfStats 
+          totalCount={allListings.length} 
+          avgRating={stats.avgRating}
+          hasPhone={allListings.filter(l => l.phone).length} // Base percentages on total
+          hasWebsite={allListings.filter(l => l.website).length} // Base percentages on total
+          topRating={stats.topRating}
+        />
 
-        {/* Comparison Table (Top 3) */}
-        {filteredListings.length >= 2 && (
-          <ComparisonTable topThree={filteredListings.slice(0, 3)} />
+        {/* Comparison Table (Top 3 of unfiltered list) */}
+        {allListings.length >= 2 && (
+          <ComparisonTable topThree={allListings.slice(0, 3)} />
         )}
 
         {/* Buyer's Guide */}
         <BuyersGuide type={type} name={slug} />
 
         {/* Map View */}
-        <ListingsMap listings={filteredListings} />
+        <ListingsMap listings={filteredListings.filter(l => l.latitude && l.longitude)} />
 
         {/* Filters */}
         <BestOfFilters onFilterChange={setFilters} />
@@ -195,7 +207,7 @@ export default function BestOfPageEnhanced({ params, initialData }: PageProps) {
             <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
+            <h3 className="text-xl font-bold text gray-900 mb-2">
               {t('best.no.results')}
             </h3>
             <p className="text-gray-600 mb-4">
@@ -229,4 +241,3 @@ export default function BestOfPageEnhanced({ params, initialData }: PageProps) {
     </div>
   );
 }
-
