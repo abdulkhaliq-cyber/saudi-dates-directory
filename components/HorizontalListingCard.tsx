@@ -40,7 +40,7 @@ export default function HorizontalListingCard({ listing }: HorizontalListingCard
   const { t, isRTL } = useLanguage();
   
   // NEW: Get the icon
-  const categoryIcon = getCategoryIcon(listing.category);
+  const categoryIcon = getCategoryIcon(listing.category ?? null);
 
   return (
     <div 
@@ -85,7 +85,7 @@ export default function HorizontalListingCard({ listing }: HorizontalListingCard
                 <div className={`flex flex-wrap items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   {listing.category && (
                     <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#E6CFA6] text-[#3E2713] rounded-full text-base font-semibold shadow-sm tracking-wide">
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 0 0">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
                       </svg>
                       {listing.category}
