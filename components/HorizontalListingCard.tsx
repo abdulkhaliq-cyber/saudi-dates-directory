@@ -20,8 +20,27 @@ interface HorizontalListingCardProps {
   listing: Listing;
 }
 
+// NEW Helper function to get contextual icon based on category
+function getCategoryIcon(category: string | null): string {
+  if (!category) return '🌴';
+  const lowerCaseCat = category.toLowerCase();
+  
+  // Use category keywords to determine a meaningful icon/emoji
+  if (lowerCaseCat.includes('farm')) return '🚜';
+  if (lowerCaseCat.includes('wholesaler') || lowerCaseCat.includes('bulk')) return '📦';
+  if (lowerCaseCat.includes('manufacturer') || lowerCaseCat.includes('factory')) return '🏭';
+  if (lowerCaseCat.includes('shop') || lowerCaseCat.includes('store') || lowerCaseCat.includes('retail')) return '🏪';
+  if (lowerCaseCat.includes('exporter')) return '✈️';
+  
+  return '🎁'; // Default for generic/other supplier
+}
+
+
 export default function HorizontalListingCard({ listing }: HorizontalListingCardProps) {
   const { t, isRTL } = useLanguage();
+  
+  // NEW: Get the icon
+  const categoryIcon = getCategoryIcon(listing.category);
 
   return (
     <div 
@@ -31,12 +50,12 @@ export default function HorizontalListingCard({ listing }: HorizontalListingCard
       <div className="flex flex-col md:flex-row">
         {/* Image Section - Left Side */}
         <div className="relative w-full md:w-64 h-48 md:h-auto flex-shrink-0 bg-gradient-to-br from-[#F5E6CA] via-[#EAD7B0] to-[#D4C29A]">
-          {/* Placeholder Image */}
+          {/* Placeholder Image - UPDATED to use dynamic icon */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center p-6">
-              <div className="text-6xl mb-2">🌴</div>
+              <div className="text-6xl mb-2">{categoryIcon}</div> {/* <-- USING ICON HERE */}
               <p className="text-sm text-[#8B7355] font-medium">
-                {listing.name.split(' ')[0]}
+                {listing.category || 'Dates Supplier'}
               </p>
             </div>
           </div>
@@ -56,7 +75,7 @@ export default function HorizontalListingCard({ listing }: HorizontalListingCard
         <div className="flex-1 p-6">
           <div className="flex flex-col h-full">
             {/* Header */}
-            <div className="flex items-start justify-between gap-4 mb-3">
+            <div className={`flex items-start justify-between gap-4 mb-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <div className="flex-1">
                 <h3 className="text-2xl font-semibold text-[#1F3524] mb-3 group-hover:text-[#2F4A36] transition-colors">
                   {listing.name}
@@ -66,7 +85,7 @@ export default function HorizontalListingCard({ listing }: HorizontalListingCard
                 <div className={`flex flex-wrap items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   {listing.category && (
                     <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#E6CFA6] text-[#3E2713] rounded-full text-base font-semibold shadow-sm tracking-wide">
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 0 0">
                         <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
                       </svg>
                       {listing.category}
@@ -145,4 +164,3 @@ export default function HorizontalListingCard({ listing }: HorizontalListingCard
     </div>
   );
 }
-
