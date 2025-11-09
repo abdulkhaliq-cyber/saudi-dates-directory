@@ -68,8 +68,14 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
+
+interface BestListingsResult {
+  listings: Awaited<ReturnType<typeof prisma.listing.findMany>>;
+  type: 'city' | 'category';
+  name: string | null;
+}
 // Get best listings for a city or category (Increased 'take' limit for full filtering/map data)
-async function getBestListings(slug: string) {
+async function getBestListings(slug: string): Promise<BestListingsResult | null> {
   try {
     const decodedSlug = decodeURIComponent(slug).toLowerCase();
     
@@ -91,7 +97,8 @@ async function getBestListings(slug: string) {
     });
     
     if (cityListings.length > 0) {
-      return { listings: cityListings, type: 'city', name: cityListings[0].city };
+      const cityName = cityListings[0]?.city ?? null;
+      return { listings: cityListings, type: 'city' as const, name: cityName };
     }
     
     // Try to match by category
@@ -112,7 +119,8 @@ async function getBestListings(slug: string) {
     });
     
     if (categoryListings.length > 0) {
-      return { listings: categoryListings, type: 'category', name: categoryListings[0].category };
+      const categoryName = categoryListings[0]?.category ?? null;
+      return { listings: categoryListings, type: 'category' as const, name: categoryName };
     }
     
     // No matches found
