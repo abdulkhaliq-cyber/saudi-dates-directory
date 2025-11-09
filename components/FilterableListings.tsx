@@ -20,6 +20,7 @@ interface FilterableListingsProps {
   initialListings: Listing[];
   cities: Array<{ name: string; count: number }>;
   categories: Array<{ category: string; count: number }>;
+  heroSearchTerm?: string;
 }
 
 // Fetcher function for SWR
@@ -28,23 +29,47 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 export default function FilterableListings({ 
   initialListings, 
   cities,
-  categories 
+  categories,
+  heroSearchTerm
 }: FilterableListingsProps) {
   const { t, isRTL } = useLanguage();
   const [selectedCity, setSelectedCity] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [currentSearch, setCurrentSearch] = useState<string>(heroSearchTerm || '');
+  const [minRating, setMinRating] = useState<number>(0);
+
+  // Sync hero search term to local state on initial load/change
+  useEffect(() => {
+    // This ensures that the state inside the filtering component updates when the Hero Search input changes.
+    if (heroSearchTerm !== undefined) {
+      setCurrentSearch(heroSearchTerm);
+    }
+  }, [heroSearchTerm]);
   
   // Build API URL with filters
   const buildUrl = () => {
     const params = new URLSearchParams();
+    
+    // Logic for all filters
     if (selectedCity) params.append('city', selectedCity);
     if (selectedCategory) params.append('category', selectedCategory);
+    if (currentSearch) params.append('search', currentSearch); // Use 'search' parameter for API route
+    if (minRating > 0) params.append('minRating', minRating.toString());
+    
+    // Only fetch if any filter is active
+    if (!selectedCity && !selectedCategory && !currentSearch && minRating === 0) {
+        return null;
+    }
+    
     return `/api/businesses?${params.toString()}`;
   };
 
+  // Determine if we need to fetch data
+  const shouldFetch = !!selectedCity || !!selectedCategory || !!currentSearch || minRating > 0;
+
   // Use SWR for data fetching with automatic revalidation
   const { data, error, isLoading } = useSWR(
-    selectedCity || selectedCategory ? buildUrl() : null,
+    shouldFetch ? buildUrl() : null,
     fetcher,
     {
       revalidateOnFocus: false,
@@ -53,13 +78,15 @@ export default function FilterableListings({
   );
 
   // Use filtered data if available, otherwise use initial listings
-  const displayListings = data?.data || initialListings;
-  const isFiltering = selectedCity || selectedCategory;
+  const displayListings = shouldFetch && data?.data ? data.data : initialListings;
+  const isFiltering = shouldFetch;
 
   // Reset filters
   const handleReset = () => {
     setSelectedCity('');
     setSelectedCategory('');
+    setCurrentSearch('');
+    setMinRating(0);
   };
 
   return (
@@ -70,6 +97,44 @@ export default function FilterableListings({
           🔍 {t('all.listings')}
         </h3>
         
+        {/* NEW Search and Rating filters at the top of the grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            {/* Search Input */}
+            <div>
+              <label htmlFor="search-input" className="block text-sm font-bold text-[#2D5F43] mb-2">
+                🔎 {t('filter.search')}
+              </label>
+              <input
+                id="search-input"
+                type="text"
+                value={currentSearch}
+                onChange={(e) => setCurrentSearch(e.target.value)}
+                placeholder={t('search.placeholder') || 'Search by Name, Address, or Category...'}
+                className="w-full px-4 py-3 border-2 border-[#E6D4B0] rounded-xl focus:ring-2 focus:ring-[#3B7A57] focus:border-[#3B7A57] bg-white text-gray-900 font-medium transition-all shadow-sm hover:shadow-md"
+              />
+            </div>
+            
+            {/* Minimum Rating Filter */}
+            <div>
+              <label htmlFor="rating-filter" className="block text-sm font-bold text-[#2D5F43] mb-2">
+                ⭐ {t('best.filters.min.rating')}
+              </label>
+              <select
+                id="rating-filter"
+                value={minRating}
+                onChange={(e) => setMinRating(parseFloat(e.target.value))}
+                className="w-full px-4 py-3 border-2 border-[#E6D4B0] rounded-xl focus:ring-2 focus:ring-[#3B7A57] focus:border-[#3B7A57] bg-white text-gray-900 font-medium transition-all shadow-sm hover:shadow-md"
+                dir={isRTL ? 'rtl' : 'ltr'}
+              >
+                <option value="0" className="text-gray-600">{t('best.filters.all')}</option>
+                <option value="4.0">4.0+ ⭐</option>
+                <option value="4.5">4.5+ ⭐</option>
+                <option value="5.0">5.0 ⭐</option>
+              </select>
+            </div>
+        </div>
+
+        {/* City, Category, and Reset controls */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* City Filter */}
           <div>
@@ -125,10 +190,33 @@ export default function FilterableListings({
           </div>
         </div>
 
-        {/* Active Filters Display */}
+        {/* Active Filters Display - ADDED SEARCH AND RATING FILTERS */}
         {isFiltering && (
           <div className={`mt-6 flex flex-wrap gap-3 items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
             <span className="text-sm font-bold text-[#2D5F43]">✨ {t('active.filters')}:</span>
+            
+            {currentSearch && (
+              <span className="inline-flex items-center gap-2 px-4 py-2 bg-[#8B5A2B] text-white text-sm font-medium rounded-full shadow-md">
+                🔎 {currentSearch}
+                <button
+                  onClick={() => setCurrentSearch('')}
+                  className="hover:bg-white/20 rounded-full w-5 h-5 flex items-center justify-center transition-colors"
+                >
+                  ×
+                </button>
+              </span>
+            )}
+            {minRating > 0 && (
+              <span className="inline-flex items-center gap-2 px-4 py-2 bg-[#F0A500] text-white text-sm font-medium rounded-full shadow-md">
+                ⭐ {minRating}+
+                <button
+                  onClick={() => setMinRating(0)}
+                  className="hover:bg-white/20 rounded-full w-5 h-5 flex items-center justify-center transition-colors"
+                >
+                  ×
+                </button>
+              </span>
+            )}
             {selectedCity && (
               <span className="inline-flex items-center gap-2 px-4 py-2 bg-[#3B7A57] text-white text-sm font-medium rounded-full shadow-md">
                 📍 {selectedCity}
@@ -211,4 +299,3 @@ export default function FilterableListings({
     </div>
   );
 }
-
