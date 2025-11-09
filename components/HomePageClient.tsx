@@ -17,23 +17,51 @@ export default function HomePageClient({ listings, cities, categories }: HomePag
 
   return (
     <div className="min-h-screen bg-[#F5E6CA]">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-br from-[#3B7A57] via-[#2D5F43] to-[#1F4430] text-white shadow-xl">
-        <div className="max-w-7xl mx-auto px-6 py-20 sm:px-8 lg:px-12">
+      {/* Hero Section with Background Image */}
+      <div 
+        className="relative h-screen md:h-96 w-full bg-cover bg-center shadow-xl overflow-hidden"
+        style={{
+          backgroundImage: 'url(/hero.png)',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+        }}
+      >
+        {/* Subtle Overlay for Better Text Contrast */}
+        <div className="absolute inset-0 bg-black/20" />
+        
+        {/* Hero Content */}
+        <div className="relative h-full flex flex-col justify-between md:justify-center items-center px-6 py-12 sm:px-8 lg:px-12 max-w-7xl mx-auto w-full">
           {/* Language Toggle - Top Right */}
-          <div className={`flex ${isRTL ? 'justify-start' : 'justify-end'} mb-6`}>
+          <div className={`flex ${isRTL ? 'justify-start' : 'justify-end'} w-full`}>
             <LanguageToggle />
           </div>
-          
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 font-['Amiri'] tracking-wide">
-            🌴 {t('site.title')}
-          </h1>
-          <p className="text-xl md:text-2xl mb-6 text-[#FFF5E6] font-light">
-            {t('site.subtitle')}
-          </p>
-          <p className="text-lg text-[#E6D4B0] bg-white/10 inline-block px-6 py-2 rounded-full backdrop-blur-sm">
-            {listings.length} {t('site.suppliers')}
-          </p>
+
+          {/* Center Content */}
+          <div className="flex flex-col items-center text-center space-y-6 flex-1 flex md:flex-initial md:justify-center">
+            <h1 className="text-4xl md:text-6xl font-bold font-['Playfair Display'] tracking-wider text-[#FFF5E6] drop-shadow-lg">
+              {t('site.title')}
+            </h1>
+            <p className="text-lg md:text-xl text-[#F5E6CA] font-light drop-shadow-md max-w-2xl">
+              {t('site.subtitle')}
+            </p>
+
+            {/* Search Bar + CTA Button */}
+            <div className="w-full max-w-2xl mt-8 flex flex-col sm:flex-row gap-3">
+              <input
+                type="text"
+                placeholder={t('search.placeholder') || 'Search by City, Store Name, or Date Type...'}
+                className="flex-1 px-6 py-4 rounded-lg text-[#2D5F43] placeholder-gray-500 font-medium focus:outline-none focus:ring-2 focus:ring-[#3B7A57] shadow-lg"
+              />
+              <button className="px-8 py-4 bg-[#8B5A2B] hover:bg-[#704214] text-white font-bold rounded-lg transition-all duration-200 hover:shadow-xl whitespace-nowrap">
+                {t('find.dates') || 'FIND DATES'}
+              </button>
+            </div>
+
+            {/* Supplier Count Badge */}
+            <p className="text-base md:text-lg text-[#FFF5E6] bg-white/10 backdrop-blur-sm px-6 py-2 rounded-full font-medium mt-4">
+              ✨ {listings.length} {t('site.suppliers')}
+            </p>
+          </div>
         </div>
       </div>
 

@@ -80,6 +80,10 @@ const translations: Translations = {
     'all.cities': 'كل المدن',
     'all.categories': 'كل الفئات',
     
+    // Search
+    'search.placeholder': 'ابحث عن المدينة أو المتجر أو نوع التمر...',
+    'find.dates': 'ابحث عن التمور',
+    
     // Footer
     'footer.rights': '© 2025 دليل التمور السعودية. جميع الحقوق محفوظة.',
     'footer.tagline': 'نربط بين أفضل موردي التمور في المملكة',
@@ -218,6 +222,10 @@ const translations: Translations = {
     // Dropdowns
     'all.cities': 'All Cities',
     'all.categories': 'All Categories',
+    
+    // Search
+    'search.placeholder': 'Search by City, Store Name, or Date Type...',
+    'find.dates': 'FIND DATES',
     
     // Footer
     'footer.rights': '© 2025 Saudi Dates Directory. All rights reserved.',
