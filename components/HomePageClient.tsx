@@ -4,6 +4,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import FilterableListings from './FilterableListings';
 import AdSlot from './AdSlot';
 import LanguageToggle from './LanguageToggle';
+import TopNavBar from './TopNavBar';
 import Link from 'next/link';
 
 interface HomePageClientProps {
@@ -16,73 +17,49 @@ export default function HomePageClient({ listings, cities, categories }: HomePag
   const { t, isRTL } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-[#F5E6CA]">
+    <div className="min-h-screen bg-[#FBF8F3]">
+      {/* Top Navigation Bar */}
+      <TopNavBar />
+      
       {/* Hero Section with Background Image */}
       <div 
-        className="relative h-screen md:h-96 w-full bg-cover bg-center shadow-xl overflow-hidden"
+        className="relative h-[500px] md:h-[450px] w-full bg-cover bg-center shadow-lg overflow-hidden"
         style={{
           backgroundImage: 'url(/hero.png)',
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
         }}
       >
         {/* Subtle Overlay for Better Text Contrast */}
-        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40" />
         
         {/* Hero Content */}
-        <div className="relative h-full flex flex-col justify-between md:justify-center items-center px-6 py-12 sm:px-8 lg:px-12 max-w-7xl mx-auto w-full">
-          {/* Language Toggle - Top Right */}
-          <div className={`flex ${isRTL ? 'justify-start' : 'justify-end'} w-full`}>
-            <LanguageToggle />
+        <div className="relative h-full flex flex-col justify-center items-center px-6 py-12 sm:px-8 lg:px-12 max-w-6xl mx-auto w-full text-center">
+
+          <h1 className="text-4xl md:text-6xl font-bold tracking-wide text-white drop-shadow-2xl mb-4">
+            {t('site.title')}
+          </h1>
+          <p className="text-lg md:text-xl text-white/90 font-light drop-shadow-lg max-w-2xl mb-8">
+            {t('site.subtitle')}
+          </p>
+
+          {/* Search Bar + CTA Button */}
+          <div className="w-full max-w-3xl flex flex-col sm:flex-row gap-3">
+            <input
+              type="text"
+              placeholder={t('search.placeholder') || 'Search by City, Store Name, or Date Type...'}
+              className="flex-1 px-6 py-4 rounded-lg text-gray-800 placeholder-gray-500 font-medium focus:outline-none focus:ring-2 focus:ring-[#3B7A57] shadow-xl bg-white"
+            />
+            <button className="px-8 py-4 bg-[#8B5A2B] hover:bg-[#6B4221] text-white font-bold rounded-lg transition-all duration-200 hover:shadow-2xl whitespace-nowrap">
+              {t('find.dates') || 'FIND DATES'}
+            </button>
           </div>
 
-          {/* Center Content */}
-          <div className="flex flex-col items-center text-center space-y-6 flex-1 flex md:flex-initial md:justify-center">
-            <h1 className="text-4xl md:text-6xl font-bold font-['Playfair Display'] tracking-wider text-[#FFF5E6] drop-shadow-lg">
-              {t('site.title')}
-            </h1>
-            <p className="text-lg md:text-xl text-[#F5E6CA] font-light drop-shadow-md max-w-2xl">
-              {t('site.subtitle')}
-            </p>
-
-            {/* Search Bar + CTA Button */}
-            <div className="w-full max-w-2xl mt-8 flex flex-col sm:flex-row gap-3">
-              <input
-                type="text"
-                placeholder={t('search.placeholder') || 'Search by City, Store Name, or Date Type...'}
-                className="flex-1 px-6 py-4 rounded-lg text-[#2D5F43] placeholder-gray-500 font-medium focus:outline-none focus:ring-2 focus:ring-[#3B7A57] shadow-lg"
-              />
-              <button className="px-8 py-4 bg-[#8B5A2B] hover:bg-[#704214] text-white font-bold rounded-lg transition-all duration-200 hover:shadow-xl whitespace-nowrap">
-                {t('find.dates') || 'FIND DATES'}
-              </button>
-            </div>
-
-            {/* Supplier Count Badge */}
-            <p className="text-base md:text-lg text-[#FFF5E6] bg-white/10 backdrop-blur-sm px-6 py-2 rounded-full font-medium mt-4">
-              ✨ {listings.length} {t('site.suppliers')}
-            </p>
-          </div>
+          {/* Supplier Count Badge */}
+          <p className="text-base md:text-lg text-white bg-white/20 backdrop-blur-md px-6 py-3 rounded-full font-medium mt-6 shadow-lg">
+            🌴 {listings.length} {t('site.suppliers')}
+          </p>
         </div>
       </div>
-
-      {/* Cities Filter */}
-      {cities.length > 0 && (
-        <div className="max-w-7xl mx-auto px-6 py-10 sm:px-8 lg:px-12">
-          <h2 className="text-2xl font-bold text-[#2D5F43] mb-5 font-['Cairo']">
-            📍 {t('browse.city')}
-          </h2>
-          <div className={`flex flex-wrap gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
-            {cities.map((city, index) => (
-              <span
-                key={index}
-                className="bg-white px-5 py-2.5 rounded-full shadow-md text-sm font-medium text-[#2D5F43] hover:bg-[#3B7A57] hover:text-white hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 cursor-pointer border border-[#E6D4B0]"
-              >
-                {city.name} ({city.count})
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Listings Grid with Filters */}
       <div className="max-w-7xl mx-auto px-6 py-10 sm:px-8 lg:px-12">

@@ -3,7 +3,7 @@
 // Client-side filterable listings component with SWR
 import { useState, useEffect } from 'react';
 import useSWR from 'swr';
-import ListingCard from './ListingCard';
+import HorizontalListingCard from './HorizontalListingCard';
 import AffiliateBanner from './AffiliateBanner';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -177,19 +177,20 @@ export default function FilterableListings({
       )}
 
       {isLoading && isFiltering ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {[...Array(8)].map((_, i) => (
+        <div className="space-y-6">
+          {[...Array(4)].map((_, i) => (
             <div key={i} className="animate-pulse">
-              <div className="bg-gray-200 rounded-xl h-64"></div>
+              <div className="bg-gray-200 rounded-lg h-48"></div>
             </div>
           ))}
         </div>
       ) : displayListings.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {displayListings.map((listing: Listing) => (
-            <div key={listing.id} className="flex flex-col">
-              <ListingCard listing={listing} />
-              <AffiliateBanner />
+        <div className="space-y-6">
+          {displayListings.map((listing: Listing, index: number) => (
+            <div key={listing.id}>
+              <HorizontalListingCard listing={listing} />
+              {/* Show affiliate banner every 5 listings */}
+              {(index + 1) % 5 === 0 && <div className="my-6"><AffiliateBanner /></div>}
             </div>
           ))}
         </div>
