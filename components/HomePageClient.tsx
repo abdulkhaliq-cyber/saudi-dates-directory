@@ -6,6 +6,7 @@ import AdSlot from './AdSlot';
 import LanguageToggle from './LanguageToggle';
 import TopNavBar from './TopNavBar';
 import Link from 'next/link';
+import { useState } from 'react';
 
 interface HomePageClientProps {
   listings: any[];
@@ -15,7 +16,12 @@ interface HomePageClientProps {
 
 export default function HomePageClient({ listings, cities, categories }: HomePageClientProps) {
   const { t, isRTL } = useLanguage();
+  const [searchTerm, setSearchTerm] = useState('');
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+  
   return (
     <div className="min-h-screen bg-[#FBF8F3]">
       {/* Top Navigation Bar */}
@@ -46,9 +52,12 @@ export default function HomePageClient({ listings, cities, categories }: HomePag
           <div className="w-full max-w-3xl flex flex-col sm:flex-row gap-3">
             <input
               type="text"
+              value={searchTerm}
+              onChange={handleSearchChange}
               placeholder={t('search.placeholder') || 'Search by City, Store Name, or Date Type...'}
               className="flex-1 px-6 py-4 rounded-lg text-gray-800 placeholder-gray-500 font-medium focus:outline-none focus:ring-2 focus:ring-[#3B7A57] shadow-xl bg-white"
             />
+            {/* The button is cosmetic but shows intent. Actual filtering happens below. */}
             <button className="px-8 py-4 bg-[#8B5A2B] hover:bg-[#6B4221] text-white font-bold rounded-lg transition-all duration-200 hover:shadow-2xl whitespace-nowrap">
               {t('find.dates') || 'FIND DATES'}
             </button>
@@ -73,6 +82,7 @@ export default function HomePageClient({ listings, cities, categories }: HomePag
           initialListings={listings}
           cities={cities}
           categories={categories}
+          heroSearchTerm={searchTerm}
         />
       </div>
 
@@ -153,4 +163,3 @@ export default function HomePageClient({ listings, cities, categories }: HomePag
     </div>
   );
 }
-
